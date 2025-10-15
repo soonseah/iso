@@ -1,0 +1,48 @@
+  Organization & Scope Questions:
+
+  1. Company basics: What's your company name, industry sector, and approximate number of employees?
+NetGain Systems, IT software vendor, about 15 employees
+  2. Scope definition: Which parts of your organization are you looking to certify?
+    - All locations or specific offices?
+singapore,
+    - All departments or specific ones (e.g., just IT/Development)?
+all
+    - Any exclusions you're planning?
+
+  3. Primary services/products: What are your core business activities that handle sensitive information?
+look at http://www.netgain-systems.com
+
+  Current State Questions:
+
+  4. Technology stack: You mentioned NodeJS, Python, MongoDB in your preferences. What's your main tech infrastructure?
+    - Cloud providers (AWS, Azure, GCP)?
+Azure
+    - On-premise servers?
+No
+    - SaaS tools you use?
+Trello
+Office365
+will provide more later...remember!
+
+  5. Existing security measures: What do you currently have in place?
+    - Password policies/MFA?
+yes
+    - Firewalls/VPNs?
+No, we mostly use cloud services and no onprem devices
+    - Backup systems?
+Using Azure Backup
+    - Any existing security policies or documentation?
+Not sure
+
+  6. Critical data: What types of sensitive data do you handle?
+    - Customer data (PII)?
+CRM, our SaaS obsverability product data
+
+    - Financial information?
+No...we use Xero SaaS for accounting, and JustLogin for HR and payroll and expense
+    - Intellectual property?
+Source code all in github, with 2FA
+    - Credentials/secrets?
+Not sure what this refers to
+
+
