@@ -409,53 +409,52 @@ This document outlines what the technical team needs to prepare and provide for 
      - Secrets rotation policy
 
 ### Development & Deployment
-9. What's your git workflow? (feature branches, PRs, main branch protection?)
-10. Do you require code reviews before merge?
-11. CI/CD pipeline setup? (GitHub Actions, Azure DevOps?)
-12. Who can deploy to production?
-13. How are deployments done? (manual, automated pipeline?)
+9. ✓ **Git workflow**: Code → Commit → Push → Create PR → Review & Approve → Merge → CI/CD Build & Deploy
+10. ✓ **Code reviews**: Yes, required. Reviewed and approved by Gna (R&D Director) or SS (CTO)
+11. ✓ **CI/CD pipeline**: Jenkins + Kubernetes
+12. ✓ **Who can deploy**: Engineers with appropriate access (manual selective deployment)
+13. ✓ **Deployment method**:
+    - Cloud: Manual deployment to AKS after Jenkins build
+    - On-premise: Engineers deploy at customer sites manually
 
 ### Data & Databases
-14. Where is the observability product data stored? (Azure SQL, Cosmos DB, MongoDB Atlas?)
-15. Where is CRM data? (custom system, Dynamics, Salesforce?)
-16. Database encryption enabled?
-17. When was the last backup restore test?
-18. Backup retention period?
+14. ✓ **Observability product data**: Elasticsearch (running in AKS)
+15. ✓ **CRM data**: In-house built CRM, data stored in Azure Kubernetes
+16. ✓ **Database encryption**: Yes (Azure encrypts data at rest by default)
+17. ✓ **Last backup restore test**: 3 months ago (approximately July 2025)
+18. ✓ **Backup retention**: 3 years (mostly)
 
 ### Monitoring & Logging
-19. ✓ **Monitoring Tools in Use**:
+19. ✓ **Primary Monitoring**: NetGain Cloud Vista (own product)
    - Application Insights: ng-us-central (Central US)
    - Log Analytics Workspace: DefaultWorkspace (Australia East)
    - Azure Monitor with Prometheus for AKS
    - Alert Rules for VM metrics (m1-emedge1)
    - **Issue**: AKS monitoring (OMS agent) is DISABLED on main cluster
-20. ✓ **Application logs**: Likely stored in Log Analytics Workspace (Australia East)
-   - **Still need**: Confirm AKS pod logs location, retention policy
-21. **Log retention period**: [STILL TO CHECK - default is typically 30-90 days]
+20. ✓ **Application logs**: Stored in Cloud Vista
+21. ✓ **Log retention**: 1 year (in Cloud Vista)
 22. ✓ **Alerting configured for**:
-   - VM Availability (m1-emedge1)
-   - Percentage CPU (m1-emedge1)
-   - Available Memory Bytes (m1-emedge1)
-   - OS/Data Disk IOPS Consumed (m1-emedge1)
-   - **Still need**: Confirm AKS alerting, application-level alerts
-23. **Alert recipients**: [STILL TO CHECK - need to check action groups]
+   - System health issues
+   - Security breaches
+   - VM metrics (Availability, CPU, Memory, Disk IOPS)
+23. ✓ **Alert recipients**: Gna (R&D Director), SS (CTO), and responsible tech personnel
 
 ### Security Tools & Practices
-24. Dependency scanning? (Dependabot, Snyk, WhiteSource?)
-25. Code scanning? (GitHub Advanced Security, SonarQube?)
-26. Vulnerability scanning on Azure resources?
-27. Do you do penetration testing?
-28. Antivirus on developer laptops?
+24. ❌ **Dependency scanning**: No (NOT IMPLEMENTED - HIGH RISK)
+25. ⚠️ **Code scanning**: GitHub Advanced Security available but NOT configured internally (HIGH RISK)
+26. ⚠️ **Vulnerability scanning on Azure**: Yes, but NOT done internally - Farhan to set up (MEDIUM RISK)
+27. ❌ **Penetration testing**: No
+28. ✅ **Antivirus on laptops**: Yes (needs verification across all 15 employees)
 
 ### Incident Response
-29. What happens when a security incident is detected?
-30. Who gets notified?
-31. How do you track incidents?
+29. ✓ **Security incident detected**: CTO and Gna notified
+30. ✓ **Who gets notified**: CTO (SS), Gna (R&D Director), Farhan, or responsible tech person
+31. ✓ **Incident tracking**: Jira
 
 ### Network & Access
-32. How do developers access Azure resources? (Azure portal, CLI, direct DB connections?)
-33. Are production databases accessible from dev machines?
-34. IP whitelisting on any services?
+32. ✓ **Developer access to Azure**: Azure RBAC (portal, CLI, kubectl)
+33. ✓ **Production DB access from dev machines**: No (restricted)
+34. ✓ **IP whitelisting**: Yes, via Nginx load balancer on AKS (Kubernetes)
 
 ---
 
@@ -486,11 +485,19 @@ This document outlines what the technical team needs to prepare and provide for 
 - [ ] Document AKS namespaces and which are prod/staging
 - [ ] Verify and document VM purposes (edge agents, testing?)
 
-### High Priority - Security Issues Found
-- [ ] **URGENT**: Upgrade aksau cluster from Kubernetes v1.22.6 (outdated and unsupported)
+### URGENT - Critical Security & Compliance Risks
+- [ ] **URGENT**: Enable GitHub Dependabot on all repositories (HIGH ISO 27001 RISK)
+- [ ] **URGENT**: Configure GitHub Advanced Security code scanning internally (HIGH ISO 27001 RISK)
+- [ ] **URGENT**: Farhan to enable Azure Defender for Cloud (MEDIUM ISO 27001 RISK)
+- [ ] **URGENT**: Verify antivirus on all 15 employee laptops
+- [ ] **URGENT**: Upgrade aksau cluster from Kubernetes v1.22.6
 - [ ] **URGENT**: Enable AKS monitoring (OMS agent) on main aks cluster
+
+### High Priority - Security Issues
 - [ ] Review and clean up 17 external/guest users - are they all still needed?
-- [ ] Test and document backup restore procedures (backups exist but restore not tested)
+- [ ] Document incident response procedures (currently ad-hoc)
+- [ ] Configure Azure Defender alerts to Gna, SS, Farhan
+- [ ] Schedule first penetration test (target Q1 2026)
 
 ### Medium Priority - Security Controls
 - [ ] Document backup retention policy (verify current settings)
@@ -531,7 +538,9 @@ This document outlines what the technical team needs to prepare and provide for 
 1. **aksau cluster running Kubernetes v1.22.6** - OUTDATED and unsupported
 2. **AKS monitoring disabled** - OMS agent not enabled on main cluster
 3. **17 external/guest users** - Need access review and cleanup
-4. **No backup restore testing documented**
+4. **Dependency scanning NOT implemented** - HIGH COMPLIANCE RISK
+5. **GitHub Advanced Security NOT configured** - HIGH COMPLIANCE RISK
+6. **Azure Defender NOT enabled** - MEDIUM COMPLIANCE RISK (Farhan to set up)
 
 ### Security Controls Present
 ✓ MFA enabled

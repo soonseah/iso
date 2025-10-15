@@ -82,17 +82,179 @@ az aks enable-addons \
 
 ---
 
-### 3. No Documented Backup Restore Testing
+### 3. Dependency Scanning NOT Implemented
 
-**Issue**: Backups are running but no evidence of restore testing
+**Issue**: No dependency scanning tools in use (Dependabot, Snyk, etc.)
+
+**Risk Level**: 🔴 CRITICAL - HIGH ISO 27001 COMPLIANCE RISK
+
+**Details**:
+- No automated dependency vulnerability scanning
+- Cannot detect CVEs in third-party libraries
+- No visibility into supply chain security
+- Vulnerable dependencies may be in production
+
+**Impact**:
+- ISO 27001 non-compliance (A.14.2.1, A.12.6.1)
+- Potential security vulnerabilities in production
+- No early warning of dependency issues
+- Supply chain attack risk
+
+**Remediation**:
+```
+Enable GitHub Dependabot (IMMEDIATE ACTION):
+1. Go to GitHub repository Settings
+2. Navigate to Security & analysis
+3. Enable "Dependabot alerts"
+4. Enable "Dependabot security updates"
+5. Configure dependabot.yml for proactive scanning
+6. Review and remediate existing vulnerabilities
+```
+
+**Target**: Enable Dependabot on all repositories immediately
+
+**Estimated Effort**: 2-4 hours (initial setup + vulnerability review)
+
+**Owner**: Development team (Gna to assign)
+
+**Deadline**: Within 1 week (URGENT)
+
+---
+
+### 4. GitHub Advanced Security NOT Configured
+
+**Issue**: GitHub Advanced Security license available but NOT configured internally
+
+**Risk Level**: 🔴 CRITICAL - HIGH ISO 27001 COMPLIANCE RISK
+
+**Details**:
+- GitHub Advanced Security is available
+- CodeQL code scanning not enabled
+- Secret scanning not active
+- No enforcement in PR workflow
+
+**Impact**:
+- ISO 27001 non-compliance (A.14.2.8)
+- Code vulnerabilities (SQL injection, XSS, etc.) not detected
+- Hardcoded secrets may be committed
+- No secure coding enforcement
+
+**Remediation**:
+```
+Configure GitHub Advanced Security (IMMEDIATE ACTION):
+1. Go to repository Settings → Security & analysis
+2. Enable "Code scanning" with CodeQL
+3. Enable "Secret scanning"
+4. Configure workflow to run on:
+   - Every push to main branch
+   - Every pull request
+5. Set PR merge requirements:
+   - Block merge if high/critical issues found
+   - Require code scanning checks to pass
+6. Train team on fixing security issues
+```
+
+**Target**: Configure on all repositories within 1 week
+
+**Estimated Effort**: 4-8 hours (setup + team training)
+
+**Owner**: Development team + Farhan
+
+**Deadline**: Within 1 week (URGENT)
+
+---
+
+### 5. Azure Defender NOT Enabled
+
+**Issue**: Microsoft Defender for Cloud not enabled on Azure resources
+
+**Risk Level**: 🟡 HIGH - MEDIUM ISO 27001 COMPLIANCE RISK
+
+**Details**:
+- Azure Defender available but not configured
+- VM misconfigurations not detected
+- AKS security issues not identified
+- Container vulnerabilities not scanned
+
+**Impact**:
+- ISO 27001 non-compliance (A.12.6.1)
+- Cloud security posture unknown
+- Potential security gaps not visible
+- Cannot meet continuous monitoring requirements
+
+**Remediation**:
+```bash
+# Farhan to enable Azure Defender (ASSIGNED)
+az security pricing create --name VirtualMachines --tier Standard
+az security pricing create --name ContainerRegistry --tier Standard
+az security pricing create --name KubernetesService --tier Standard
+az security pricing create --name StorageAccounts --tier Standard
+
+# Configure alerts
+az monitor action-group create \
+  --name SecurityTeam \
+  --resource-group core_sea \
+  --action email gna gna@netgain-systems.com \
+  --action email ss soonseah@netgain-systems.com \
+  --action email farhan farhan@netgain-systems.com
+```
+
+**Target**: Enable for VMs, AKS, Container Registry, Storage
+
+**Estimated Effort**: 2-4 hours
+
+**Owner**: Farhan (ASSIGNED)
+
+**Deadline**: Within 2 weeks
+
+---
+
+### 6. Antivirus Verification Needed
+
+**Issue**: Team claims antivirus is installed but needs verification
+
+**Risk Level**: 🟡 HIGH (if not verified)
+
+**Details**:
+- Antivirus reported as "yes" but not confirmed
+- Need to verify across all 15 employee laptops
+- Unknown which solution is used
+- Unknown if definitions are updated
+
+**Impact**:
+- ISO 27001 requirement (A.12.2.1)
+- Endpoint protection compliance
+- Malware infection risk
+
+**Remediation**:
+1. Survey all 15 employees
+2. Verify antivirus installed and active
+3. Check real-time protection enabled
+4. Verify definition updates (within 7 days)
+5. Document antivirus solution used
+6. Establish quarterly compliance checks
+
+**Target**: 100% verified antivirus coverage
+
+**Estimated Effort**: 2-3 hours
+
+**Owner**: IT Admin / Farhan
+
+**Deadline**: Within 2 weeks
+
+---
+
+### 7. No Documented Backup Restore Testing
+
+**Issue**: Backups running, last restore test 3 months ago but not documented
 
 **Risk Level**: 🟡 HIGH
 
 **Details**:
 - Daily snapshots are being created
 - 3 backup vaults configured
-- No documentation of successful restore tests
-- Unknown if backups are actually recoverable
+- Last restore test: 3 months ago (approximately July 2025)
+- No documentation of test results
 
 **Impact**:
 - ISO 27001 requirement (A.12.3.1 - Information backup)
@@ -101,14 +263,14 @@ az aks enable-addons \
 - RTO/RPO unknown
 
 **Remediation**:
-1. Document current backup configuration
-2. Schedule restore test in non-production
-3. Test VM restore from snapshot
-4. Test AKS persistent volume restore
-5. Document restore procedures
+1. Document what was tested 3 months ago
+2. Document restore test results and lessons learned
+3. Schedule next restore test (target: January 2026)
+4. Create restore runbooks for VM, database, AKS
+5. Test different scenarios (full restore, file-level, database)
 6. Establish quarterly restore testing schedule
 
-**Target**: Complete first restore test and document procedures
+**Target**: Document previous test and schedule next test
 
 **Estimated Effort**: 4-6 hours
 
@@ -118,7 +280,7 @@ az aks enable-addons \
 
 ---
 
-### 4. Excessive External User Access
+### 8. Excessive External User Access
 
 **Issue**: 17 external/guest users in Azure AD - unclear if all still need access
 
