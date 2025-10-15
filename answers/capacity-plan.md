@@ -15,16 +15,16 @@ The following table summarizes the current capacity usage for NetGain Systems' i
 
 | Resource | Current Capacity | Current Usage | Usage % | Threshold Alert | Recommendation | Priority | Timeline |
 |----------|------------------|---------------|---------|-----------------|----------------|----------|----------|
-| **AKS Cluster (SEA) - Compute** | 11 nodes<br>40 vCPUs<br>204 GB RAM | ~24 vCPUs<br>~133 GB RAM | 60-65% | >80% | Monitor monthly<br>Add 2 nodes if approaching 80% | High | When needed |
-| **AKS Cluster (AU) - Compute** | 3 nodes<br>6 vCPUs<br>42 GB RAM | ~2.4 vCPUs<br>~19 GB RAM | 40-45% | >80% | Monitor quarterly<br>Consider 1 node if >70% | Medium | When needed |
-| **Elasticsearch Storage** | ~500 GB | ~350 GB | 70% | >85% | Monitor weekly<br>Implement data lifecycle policy<br>Expand when >80% | High | Ongoing |
-| **Azure Storage (PVCs)** | ~2 TB | ~1.2 TB | 60% | >80% | Monitor quarterly<br>Add storage as needed per PVC | Medium | As needed |
-| **Container Registry** | Unlimited | ~50 GB | Low | >500 GB | Implement image cleanup policy | Low | Q4 2026 |
-| **Database (CRM)** | ~50 GB | ~30 GB | 60% | >85% | Monitor quarterly<br>Expand when needed | Medium | When needed |
-| **Azure Bandwidth** | Pay-as-you-go | ~500 GB/month | N/A | Cost spike >30% | Monitor monthly costs | Low | Ongoing |
-| **Log Analytics Workspace** | Pay-as-you-go | ~10 GB/month | Low | Cost spike | Monitor costs after enabling AKS monitoring | Medium | Q1 2026 |
-| **GitHub Storage** | Unlimited | ~5 GB | Very low | N/A | No action needed | Low | N/A |
-| **Office365 Storage** | 1 TB per user | ~200 GB total | 20% | >80% | No action needed | Low | N/A |
+| **AKS Cluster (SEA) - Compute** | 11 nodes<br>• cvsstorage2: 7 nodes (Standard_D4as_v4)<br>• services2: 2 nodes (Standard_DS11_v2)<br>• cvsdefault3: 2 nodes (Standard_E4ads_v5) | Node utilization requires kubectl | Unknown | >80% CPU/RAM | Enable monitoring (OMS agent)<br>Check with: `kubectl top nodes`<br>Add nodes if >80% | High | Q1 2026 |
+| **AKS Cluster (AU) - Compute** | 3 nodes<br>• cvsdefault2: 1 node (Standard_DS11_v2)<br>• cvsstorage1: 2 nodes (Standard_DS11_v2) | Node utilization requires kubectl | Unknown | >80% CPU/RAM | **URGENT**: Upgrade K8s from 1.22.6<br>Monitor quarterly<br>Consider 1 node if >70% | Critical | Q1 2026 |
+| **AKS Node OS Disks (SEA)** | 11 nodes × 128 GB | 1,408 GB total | Unknown | >80% per node | Monitor node disk usage<br>Expand if needed | Medium | Monitor |
+| **AKS Node OS Disks (AU)** | 3 nodes × 128 GB | 384 GB total | Unknown | >80% per node | Monitor node disk usage | Low | Monitor |
+| **AKS Persistent Volumes (SEA)** | 32 PVCs attached | Size data unavailable via CLI | Unknown | >80% per PVC | Use: `kubectl get pvc -A`<br>Document PVC purposes<br>Monitor storage | High | Q1 2026 |
+| **AKS Persistent Volumes (AU)** | 8 PVCs attached | Size data unavailable via CLI | Unknown | >80% per PVC | Use: `kubectl get pvc -A`<br>Monitor storage | Medium | Q1 2026 |
+| **Container Registry (netgain)** | 10 GB limit (Basic SKU) | 193.8 GB used<br>**⚠️ OVER LIMIT** | **1,938%** | >80% of limit | **URGENT**: Upgrade to Standard SKU<br>Implement image cleanup<br>47 repositories identified | Critical | Immediate |
+| **Virtual Machines** | • m1-emedge1: Standard_D2as_v4 (Running)<br>• ubuntu-test1: Standard_B2ms (Deallocated)<br>• emedge-vm1/vm2: Standard_D2as_v4 (Running) | Requires Azure Monitor metrics | Unknown | >80% CPU/Disk | Monitor via Azure Monitor<br>VM metrics available in portal | Medium | Ongoing |
+| **Log Analytics Workspace** | Pay-per-GB (PerGB2018 SKU)<br>30-day retention | Ingestion data requires query | Unknown | Cost spike >30% | After enabling OMS: monitor daily ingestion<br>Consider 180-day retention | Medium | Q1 2026 |
+| **Storage Accounts** | 7 accounts<br>• AKS: 4 accounts (Standard_LRS, Premium_LRS)<br>• Cloud shell, HA test, AI dev | Requires per-account query | Unknown | >80% capacity | Query each account for usage<br>Monitor AKS storage accounts | Low | Quarterly |
 
 ---
 
