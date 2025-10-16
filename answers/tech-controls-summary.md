@@ -20,6 +20,11 @@
 - Scanning: OpenVAS weekly (authenticated) across relevant hosts/subnets and SaaS surfaces (where applicable).
 - Patch SLAs: Critical 7d, High 14d, Medium 30d, Low 90d. Exceptions tracked in Jira with CTO approval; monthly aging report.
 
+### Vulnerability Findings Snapshot
+- Latest report: `answers/evidence/openvas-livedemo-2025-10-01.pdf` (livedemo SaaS).
+- Severity counts (Critical/High/Medium/Low): [pending exact extraction from report].
+- High-level status: remediation tracked in Jira; follow-up retest scheduled with the next weekly OpenVAS run.
+
 ## Incident Response
 - Severity matrix Sev1–Sev4. Use Teams incident channel. Preserve Cloud Vista logs and VM snapshots. Post‑incident review within 5 business days.
 

@@ -7,6 +7,7 @@
 - Logging/Monitoring: Cloud Vista workspace config; diagnostic settings samples; retention settings; Teams alert screenshot and recent alert→ticket example.
 - Backups/DR: Backup policy export; encryption settings; 2025‑09‑20 restore test report/log; DR tabletop notes and action items.
 - Vulnerability: OpenVAS last scan summary and findings; remediation aging report; SLA/exception tickets.
+  - Sample report to include: `answers/evidence/openvas-livedemo-2025-10-01.pdf` (from `~/Downloads/OpenVAS Scan livedemo.pdf`).
 - Incident response: Runbook; recent incident timeline; preserved logs/snapshots evidence; 5‑day post‑incident review.
 - Azure guardrails: Policy initiative assignment; deny rules evidence; compliance view; auto‑remediation task.
 - Encryption/Secrets: TLS configuration; at‑rest encryption evidence; (gap) plan for Key Vault/OIDC + interim controls ticket.
