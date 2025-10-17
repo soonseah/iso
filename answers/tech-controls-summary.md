@@ -11,17 +11,19 @@
 ## Logging & Monitoring
 - Centralized in Cloud Vista (from Azure diagnostic settings). Retention: 30 days hot, 365 days archive. Hosts time‑synced via Azure Time.
 - Alerts post to Microsoft Teams; 24/7 on‑call rotation handles escalation.
+ - Evidence: Cloud Vista Log Analytics view with recent events `answers/evidence/logging/cloud-vista-log-analytics-2025-10-17.png`; diagnostic settings enabled `answers/evidence/logging/diagnostic-settings-enabled-2025-10-17.png`; alert rules list `answers/evidence/logging/alert-rules-2025-10-17.png`.
 
 ## Backups & DR
 - Targets: RPO 24h (apps) / 15m (datastores). Nightly full + 15m log shipping; AES‑256 at rest.
 - Last restore test: 2025‑09‑20, successful in 45m. DR tabletop 2025‑09‑25; RTO met; action items: DNS TTL tuning, runbook clarifications.
+ - Evidence: Backup item shows Last backup status = Success with recent recovery points; Jobs (last 7 days) show 0 Failed. See `answers/evidence/backups/backup-item-success-2025-10-17.png` and `answers/evidence/backups/backup-jobs-last7days-2025-10-17.png`.
 
 ## Vulnerability & Patch
 - Scanning: OpenVAS weekly (authenticated) across relevant hosts/subnets and SaaS surfaces (where applicable).
 - Patch SLAs: Critical 7d, High 14d, Medium 30d, Low 90d. Exceptions tracked in Jira with CTO approval; monthly aging report.
 
 ### Vulnerability Findings Snapshot
-- Latest report: `answers/evidence/openvas-livedemo-2025-10-01.pdf` (livedemo SaaS).
+- Latest report: `answers/evidence/vulnerability/openvas-livedemo-2025-10-01.pdf` (livedemo SaaS). See `answers/evidence/index.md` for current latest across categories.
 - Severity counts (Critical/High/Medium/Low): [pending exact extraction from report].
 - High-level status: remediation tracked in Jira; follow-up retest scheduled with the next weekly OpenVAS run.
 
@@ -35,6 +37,7 @@
 ## Encryption & Secrets
 - In transit: TLS 1.2+ with HSTS. At rest: AES‑256 (Azure‑managed keys).
 - Key/secret management: Azure Key Vault via RBAC; rotation every 180 days (automation targeted). Note: CI/app secrets migration to Key Vault/OIDC tracked in gaps.
+- Evidence: Edge/App TLS policy and Tomcat/server TLS configuration screenshots in `answers/evidence/appsec/`; application crypto code shown for encryption/hashing utility.
 
 ## Data & Assets
 - Asset inventory: Azure Resource Graph scheduled export + SaaS register; owner per asset.

@@ -1,6 +1,6 @@
 # Evidence Folder
 
-Use this folder to store audit artifacts (reports, exports, screenshots).
+Use this folder to store audit artifacts (reports, exports, screenshots). Maintain one “Latest” per category in `answers/evidence/index.md` to avoid duplicates.
 
 Naming
 - Use kebab-case with context and date: `openvas-<system>-<yyyy-mm-dd>.pdf`
@@ -16,4 +16,10 @@ Import example
 
 Tips
 - Prefer PDFs/CSVs over images for clarity.
-- Link evidence from `answers/audit-evidence-checklist.md` and related docs.
+- Link evidence from `answers/audit-evidence-checklist.md`, `answers/tech-controls-summary.md`, and update `answers/evidence/index.md`.
+
+De-duplication & Latest
+- Only one “Latest” per category. Move older files to the same folder; keep their dates in filenames.
+- To check newest by naming convention:
+  - Vulnerability: `ls -1 answers/evidence/vulnerability | sort -r | head -n1`
+  - Backups: `ls -1 answers/evidence/backups | sort -r | head -n1` (if used)
